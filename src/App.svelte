@@ -3,6 +3,7 @@
   import Counter from './lib/Counter.svelte'
   import db from './db'
   import { onMount } from 'svelte';
+  import { dataset_dev } from 'svelte/internal';
 
   let allCases: any=[];
   onMount(async() => {
@@ -29,21 +30,43 @@
 
 <main>
   <div class="row">
-    {#each allCases as {day, title, content}, index}
+    {#each allCases as {day, title, content, type, photo, link}, index}
       <div class="flip-box">
-        <div class="flip-box-inner" class:show-back={selected === index}>
-          <div class="flip-box-front card">
+        <div class="flip-box-inner" class:show-back={selected === day}>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div class="flip-box-front card" on:click={(e)=>toggleBackFront(e)} data-card-id={day}>
            {day}
           </div>
   
-          <div class="flip-box-back container">
-            <h2>{title}</h2>
-            
-            <p>{content}</p> 
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div class="flip-box-back container"  on:click={(e)=>toggleBackFront(e)} data-card-id={day}>
+            <div class="flex-shrink-0">
+              {#if type==="photo"}
+                  <img class="h-full w-full object-cover" src={photo} alt="" />
+              {/if}
+              {#if type==="musique"}
+                  <iframe width="300" height="315" src={link} title="yuyube"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              {/if}
+              {#if type==="video"}
+                  <video  width="400" controls autoplay >
+                    <track kind="captions">
+                      <source src={link}
+                              type="video/mp4">
+                  </video>
+              {/if}
+          </div>
+          <div class="flex flex-1 flex-col justify-between bg-white p-6">
+              <div class="flex-1">
+                      <p class="text-sm font-medium text-indigo-600">{type}</p>
+                  <div class="mt-2 block">
+                      <p class="text-xl font-semibold text-gray-900"> {title}</p>
+                      <p class="mt-3 text-base text-gray-500">{content}</p>
+                  </div>
+              </div>
+          </div>
           </div>
         </div>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <footer on:click={toggleBackFront} data-card-id={index}>Ouvrir</footer>
+        
       </div>
       {:else}
 		<p>loading...</p>
@@ -70,6 +93,8 @@
 		margin: 0 20px 40px;
 		border: 1px solid #f1f1f1;
 		perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    border:none;
+
 	}
 
 	/* This container is needed to position the front and back side */
@@ -102,7 +127,9 @@
 
 	/* Style the front side */
 	.flip-box-front {
-		background-color: #000;
+    border-radius: 0.5rem;
+		background-color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 	}
 
 	/* Style the back side */
@@ -110,10 +137,10 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		background-color: black;
-		color: white;
-		width: 196px;
-		height: 300px;
+    border-radius: 0.5rem;
+		background-color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+		color: black;
 		transform: rotateY(180deg) translateX(6px);
 	}
 
@@ -164,12 +191,16 @@
 	 */
 	/* Add some shadows to create a card effect */
 	.card {
-		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 	}
 
 	/* Some left and right padding inside the container */
 	.container {
-		padding: 5px;
+		/* padding: 0 5px 0 5px; */
+    padding-left: 2px;
+    padding-right: 5px;
 	}
 
 	/* Clear floats */
