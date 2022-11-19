@@ -201,7 +201,7 @@ i {
 
   :global(body) {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-    background-color: #cc231e;
+    background-color: #F5624D;
     line-height: 1.6;
   }
   .row {
