@@ -48,7 +48,7 @@
             data-card-id={day}
           >
             {day}
-			<div class="gift">
+			<div class="gift" class:show-gift={selected === day}>
 				<i></i>
 				<i></i>
 			  </div>
@@ -69,6 +69,11 @@
             >
               {#if type === "story"}
                 <div
+                  style="width:100%; height:0; object-fit:cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;"
+                />
+              {/if}
+			  {#if type === "link"}
+			  <div
                   style="width:100%; height:0; object-fit:cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;"
                 />
               {/if}
@@ -122,7 +127,11 @@
                   <p
                     style="margin:0; margin-top: 0.75rem; font-size: 1rem; line-height: 1rem; color:#7dd3fc;"
                   >
-                    <Markdown source={content ? content : ""} />
+					{#if type === "link"}
+						<a href={link} style="width:100%; height:0; object-fit:cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; color:#7dd3fc;" > Donne ici !</a>
+					{:else}
+						<Markdown source={content ? content : ""} />
+					{/if}
                   </p>
                 </div>
               </div>
@@ -136,8 +145,8 @@
   </div>
 </main>
 <style lang="scss">
-	 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-  @import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+	@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+  	@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 	*,
 *:before,
 *:after {
@@ -231,6 +240,10 @@ i {
 
   .show-back {
     transform: rotateY(180deg);
+  }
+
+  .show-gift{
+	visibility: hidden;
   }
 
   /* Position the front and back side */
