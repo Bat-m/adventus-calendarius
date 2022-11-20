@@ -5,14 +5,9 @@
   let allCases: any = [];
   onMount(async () => {
     allCases = await db.cases.all();
-    console.log(
-      "🚀 ~ file: App.svelte ~ line 9 ~ onMount ~ allCases",
-      allCases
-    );
   });
 
   let selected: number;
-  $: console.log(selected);
 
   let cardBackShowing = false;
 
@@ -86,6 +81,7 @@
               {/if}
               {#if type === "musique"}
                 <iframe
+				
                   style="width:100%; height:100%; object-fit:cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;"
                   width="200"
                   height="200"
@@ -94,6 +90,7 @@
                   frameborder="0"
                   allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen
+				  class:show-gift={selected !== day}
                 />
               {/if}
               {#if type === "video"}
