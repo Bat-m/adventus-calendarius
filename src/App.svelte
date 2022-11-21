@@ -34,7 +34,7 @@
 <main>
   <div class="row">
     {#each allCases as { day, title, content, type, photo, link, month }}
-      <div class="flip-box">
+      <div class="flip-box" class:flip-box-spe={selected === 21}>
         <div class="flip-box-inner" class:show-back={selected === day}>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
@@ -224,6 +224,11 @@ i {
     border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
     border: none;
+    flex:auto;
+  }
+
+  div.flip-box:nth-child(21).flip-box-spe{
+    height: 700px;
   }
 
   .flip-box-inner {
