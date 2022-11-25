@@ -123,6 +123,9 @@
                   <p
                     style="margin:0; margin-top: 0.75rem; font-size: 1rem; line-height: 1rem; color:#7dd3fc;"
                   >
+                  {#if type === "photo"}
+                  <a href={photo} download style="width:100%; height:0; object-fit:cover; text-decoration: underline; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; color:#7dd3fc;" > Je veux la photo !</a>
+                	{/if}
 					{#if type === "link"}
 						<a href={link} style="width:100%; height:0; object-fit:cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; color:#7dd3fc;" > Donne ici !</a>
 					{:else}
