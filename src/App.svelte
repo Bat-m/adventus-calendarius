@@ -15,8 +15,7 @@
     var a = new Date();
     var day = a.getDate();
     var month = a.getMonth();
-    if (Number(bdDay) <= day && bdMonth - 2 === month) {
-      console.log("hop");
+    if (Number(bdDay) <= day && bdMonth - 1 === month) {
       //a decommenter une fois en prod
 
       // if same card clicked twice to toggle front and back
